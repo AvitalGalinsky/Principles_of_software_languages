@@ -1,8 +1,8 @@
 //
 //  main.swift
-//  Exercise-1
+//  Execise-1
 //
-//  Created by avital on 19/03/2023.
+//  Created by avital on 20/03/2023.
 //
 
 import Foundation
