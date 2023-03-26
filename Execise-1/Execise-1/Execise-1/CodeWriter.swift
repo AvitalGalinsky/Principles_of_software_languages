@@ -44,7 +44,39 @@ class CodeWriter {
     
     /* Writes to the output file the assembly code that implements the given push or pop command. */
     func WritePushPop(cType: cmdType, segment: String, index: Int) {
-        
+        switch cType {
+            case cmdType.c_push:
+                writePush(segment: segment, index: index)
+            case cmdType.c_pop:
+                writePop(segment: segment, index: index)
+            default:
+                return
+        }
+    }
+    
+    private func writePush(segment: String, index: Int) {
+        switch segment {
+            case "local", "argument", "this", "that":
+                writePushSegmentType1(segment:segment, index:index)
+            case "constant":
+                writePushConstant(index:index)
+            case "temp":
+                writePushTemp(index:index)
+            
+            default:
+                return
+        }
+    }
+    
+    private func writePop(segment: String, index: Int) {
+        switch segment {
+            case "local", "argument", "this", "that":
+                writePopSegmentType1(segment:segment, index:index)
+            case "temp":
+                writePopTemp(index:index)
+            default:
+                return
+        }
     }
     
     /* Closes the output file */
@@ -110,7 +142,7 @@ class CodeWriter {
         case "lt":
             hackCondition = "JLT"
         default:
-            hackCondition = ""
+            return
         }
         let hackCommand = """
         @SP
@@ -137,4 +169,109 @@ class CodeWriter {
         conditionsCounter += 1
     }
     
+    private func writePushConstant(index : Int) {
+        let hackCommand = """
+        @\(index)
+        D=A
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    private func writePushSegmentType1(segment : String, index : Int) {
+        var stackPtr = ""
+        switch segment {
+            case "local":
+                stackPtr = "LCL"
+            case "argument":
+                stackPtr = "ARG"
+            case "this":
+                stackPtr = "THIS"
+            case "that":
+                stackPtr = "THAT"
+            default:
+                return
+        }
+        
+        let hackCommand = """
+        @\(index)
+        D=A
+        @\(stackPtr)
+        A=M+D
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    private func writePopSegmentType1(segment : String, index : Int) {
+        var stackPtr = ""
+        switch segment {
+            case "local":
+                stackPtr = "LCL"
+            case "argument":
+                stackPtr = "ARG"
+            case "this":
+                stackPtr = "THIS"
+            case "that":
+                stackPtr = "THAT"
+            default:
+                return
+        }
+        
+        var hackCommand = """
+        @SP
+        A=M-1
+        D=M
+        @\(stackPtr)
+        A=M
+        """
+        for _ in 0..<index {
+            hackCommand += """
+            A=A+1
+            """
+        }
+        hackCommand += """
+        M=D
+        @SP
+        M=M-1
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    private func writePushTemp(index : Int) {
+        let hackCommand = """
+        @\(5+index)
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+
+    }
+    
+    private func writePopTemp(index: Int) {
+        let hackCommand = """
+        @SP
+        A=M-1
+        D=M
+        @\(5+index)
+        M=D
+        @SP
+        M=M-1
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+
+    }
 }
