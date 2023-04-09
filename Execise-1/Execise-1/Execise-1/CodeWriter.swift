@@ -10,6 +10,7 @@ import Foundation
 class CodeWriter {
     private var outputFileHandle: FileHandle?
     private var conditionsCounter = 0
+    private var currentVMFileName = ""
     
     init(outputFilePath: String) throws {
         //open file to write:
@@ -62,7 +63,10 @@ class CodeWriter {
                 writePushConstant(index:index)
             case "temp":
                 writePushTemp(index:index)
-            
+            case "pointer":
+                writePushPointer(index: index)
+            case "static":
+                writePushStatic(index: index)
             default:
                 return
         }
@@ -74,9 +78,17 @@ class CodeWriter {
                 writePopSegmentType1(segment:segment, index:index)
             case "temp":
                 writePopTemp(index:index)
+            case "pointer":
+                writePopPointer(index: index)
+            case "static":
+                writePopStatic(index: index)
             default:
                 return
         }
+    }
+    
+    func SetVMFileName(fileName: String) {
+        currentVMFileName = fileName.trimmingCharacters(in: .newlines)
     }
     
     /* Closes the output file */
@@ -100,15 +112,16 @@ class CodeWriter {
         default:
             return
         }
-        
+        //2+3
         let hackCommand = """
         @SP
         A=M-1
         D=M
         A=A-1
-        M=D\(op)M
+        M=M\(op)D
         @SP
         M=M-1
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
     }
@@ -128,6 +141,7 @@ class CodeWriter {
         @SP
         A=M-1
         M=\(op)M
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
     }
@@ -149,7 +163,7 @@ class CodeWriter {
         A=M-1
         D=M
         A=A-1
-        D=D-M
+        D=M-D
         @IF_TRUE\(conditionsCounter)
         D;\(hackCondition)
         D=0
@@ -164,6 +178,7 @@ class CodeWriter {
         M=D
         @SP
         M=M-1
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
         conditionsCounter += 1
@@ -178,6 +193,7 @@ class CodeWriter {
         M=D
         @SP
         M=M+1
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
     }
@@ -208,6 +224,7 @@ class CodeWriter {
         M=D
         @SP
         M=M+1
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
     }
@@ -233,16 +250,19 @@ class CodeWriter {
         D=M
         @\(stackPtr)
         A=M
+        
         """
         for _ in 0..<index {
             hackCommand += """
             A=A+1
+            
             """
         }
         hackCommand += """
         M=D
         @SP
         M=M-1
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
     }
@@ -256,9 +276,9 @@ class CodeWriter {
         M=D
         @SP
         M=M+1
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
-
     }
     
     private func writePopTemp(index: Int) {
@@ -270,8 +290,75 @@ class CodeWriter {
         M=D
         @SP
         M=M-1
+        
         """
         outputFileHandle!.write(hackCommand.data(using: .utf8)!)
-
+    }
+    
+    private func writePushPointer(index: Int) {
+        var addr = ""
+        if index == 0 {
+            addr = "THIS"
+        } else {
+            addr = "THAT"
+        }
+        let hackCommand = """
+        @\(addr)
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    private func writePopPointer(index: Int) {
+        var addr = ""
+        if index == 0 {
+            addr = "THIS"
+        } else {
+            addr = "THAT"
+        }
+        let hackCommand = """
+        @SP
+        A=M-1
+        D=M
+        @\(addr)
+        M=D
+        @SP
+        M=M-1
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    private func writePushStatic(index: Int) {
+        let hackCommand = """
+        @\(currentVMFileName).\(index)
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    private func writePopStatic(index: Int) {
+        let hackCommand = """
+        @SP
+        M=M-1
+        A=M
+        D=M
+        @\(currentVMFileName).\(index)
+        M=D
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
     }
 }

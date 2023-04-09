@@ -30,7 +30,7 @@ class Parser {
             
             /* read file */
             let inputFileContent = try String(contentsOfFile: inputFilePath)
-            let inputFileLines = inputFileContent.components(separatedBy: "\n").filter {!$0.isEmpty }
+            inputFileLines = inputFileContent.components(separatedBy: .newlines).filter { !$0.isEmpty }
         } catch {
             throw FileException(message: "Error reading file: \(error.localizedDescription)")
         }
