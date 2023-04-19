@@ -31,6 +31,12 @@ class CodeWriter {
     
     /* Writes to the output file the assembly code that implements the given arithmetic-logical command */
     func WriteArithmetic(command: String) {
+        let vmCommand = """
+        
+        //\(command)
+        
+        """
+        outputFileHandle!.write(vmCommand.data(using: .utf8)!)
         switch command {
         case "add", "sub", "and", "or":
             writeBinaryCommand(vmCommand: command)
@@ -56,6 +62,12 @@ class CodeWriter {
     }
     
     private func writePush(segment: String, index: Int) {
+        let vmCommand = """
+        
+        //push \(segment) \(index)
+        
+        """
+        outputFileHandle!.write(vmCommand.data(using: .utf8)!)
         switch segment {
             case "local", "argument", "this", "that":
                 writePushSegmentType1(segment:segment, index:index)
@@ -73,6 +85,12 @@ class CodeWriter {
     }
     
     private func writePop(segment: String, index: Int) {
+        let vmCommand = """
+        
+        //pop \(segment) \(index)
+        
+        """
+        outputFileHandle!.write(vmCommand.data(using: .utf8)!)
         switch segment {
             case "local", "argument", "this", "that":
                 writePopSegmentType1(segment:segment, index:index)
