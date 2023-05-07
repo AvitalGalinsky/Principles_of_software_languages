@@ -63,6 +63,18 @@ class Parser {
             return cmdType.c_push
         case "pop":
             return cmdType.c_pop
+        case "label":
+            return cmdType.c_label
+        case "goto":
+            return cmdType.c_goto
+        case "if-goto":
+            return cmdType.c_if
+        case "call":
+            return cmdType.c_call
+        case "function":
+            return cmdType.c_function
+        case "return":
+            return cmdType.c_return
         default:
             return cmdType.c_none
         }
@@ -86,6 +98,6 @@ class Parser {
     /* Returns the second argument of the current command.
      Should be called only if the current command is c_push, c_pop, c_function or c_call */
     func arg2() -> Int {
-        return Int(currentCommand[2])!
+        return Int(currentCommand[2].components(separatedBy: CharacterSet.decimalDigits.inverted).joined())!
     }
 }

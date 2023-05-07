@@ -10,7 +10,8 @@ import Foundation
 class CodeWriter {
     private var outputFileHandle: FileHandle?
     private var conditionsCounter = 0
-    private var currentVMFileName = ""
+    private var returnAddressCounter = 0
+    private var currentFileName = ""
     
     init(outputFilePath: String) throws {
         //open file to write:
@@ -27,6 +28,18 @@ class CodeWriter {
         if (outputFileHandle == nil) {
             throw FileException(message: "Error open file: \(outputFilePath) for writing")
         }
+        
+        let initCmd = """
+        //init:
+        @256
+        D=A
+        @SP
+        M=D
+        
+        """
+        outputFileHandle!.write(initCmd.data(using: .utf8)!)
+        WriteCall(functionName: "Sys.init", nArgs: 0)
+        
     }
     
     /* Writes to the output file the assembly code that implements the given arithmetic-logical command */
@@ -59,6 +72,185 @@ class CodeWriter {
             default:
                 return
         }
+    }
+    
+    func WriteLabel(label: String) {
+        let hackCommand = """
+        (\(currentFileName).\(label))
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    func WriteGoto(label: String) {
+        let hackCommand = """
+        @\(currentFileName).\(label)
+        0; JMP
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    func WriteIf(label: String) {
+        let hackCommand = """
+        @SP
+        M=M-1
+        A=M
+        D=M
+        @\(currentFileName).\(label)
+        D; JNE
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    func WriteFunction(functionName: String, nVars: Int) {
+//        WriteLabel(label: functionName)
+        
+        let hackCommand = """
+        (\(functionName))
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+        
+        for _ in 0..<nVars {
+            writePushConstant(index: 0)
+        }
+        
+    }
+    
+    func WriteCall(functionName: String, nArgs: Int) {
+        let returnLabel = "returnAddress_\(returnAddressCounter)"
+        pushReturnAddress(returnLabel: "\(currentFileName).\(returnLabel)")
+        saveSegmetsPointer(segment : "LCL")
+        saveSegmetsPointer(segment : "ARG")
+        saveSegmetsPointer(segment : "THIS")
+        saveSegmetsPointer(segment : "THAT")
+        repositionsARG(nArgs : nArgs)
+        repositionsLCL()
+        let hackCommand = """
+        @\(functionName)
+        0; JMP
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+        
+        WriteLabel(label: returnLabel)
+        returnAddressCounter += 1;
+    }
+    
+    func WriteReturn() {
+        var hackCommand = """
+        //endFrame = LCL | gets the address at the frame's end:
+        @LCL
+        D=M
+        //RAM[13] = retAddr = *(FRAME-5) | gets the return address:
+        @5
+        A=D-A
+        D=M
+        @13
+        M=D
+        //*ARG=pop() | puts the return value for the caller:
+        @SP
+        M=M-1
+        A=M
+        D=M
+        @ARG
+        A=M
+        M=D
+        //SP = ARG+1 | repositions SP:
+        @ARG
+        D=M
+        @SP
+        M=D+1
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+        
+        updatePointer(pointer: "THAT")
+        updatePointer(pointer: "THIS")
+        updatePointer(pointer: "ARG")
+        updatePointer(pointer: "LCL")
+        
+        hackCommand = """
+        @13
+        A=M
+        0; JMP
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+        
+    }
+    
+    private func updatePointer(pointer : String){
+        let hackCommand = """
+        //restore \(pointer)
+        @LCL
+        M=M-1
+        A=M
+        D=M
+        @\(pointer)
+        M=D
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    
+//    private functions:
+    
+    private func pushReturnAddress(returnLabel : String){
+        let hackCommand = """
+        @\(returnLabel)
+        D=A
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    
+    private func  saveSegmetsPointer(segment : String){
+        let hackCommand = """
+        //push \(segment)
+        @\(segment)
+        D=M
+        @SP
+        A=M
+        M=D
+        @SP
+        M=M+1
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+
+    private func repositionsARG(nArgs : Int){
+        let hackCommand = """
+        //ARG = SP - \(nArgs) - 5
+        @SP
+        D=M
+        @\(nArgs + 5)
+        D=D-A
+        @ARG
+        M=D
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
+    }
+    private func repositionsLCL(){
+        let hackCommand = """
+        //LCL = SP
+        @SP
+        D=M
+        @LCL
+        M=D
+        
+        """
+        outputFileHandle!.write(hackCommand.data(using: .utf8)!)
     }
     
     private func writePush(segment: String, index: Int) {
@@ -105,8 +297,8 @@ class CodeWriter {
         }
     }
     
-    func SetVMFileName(fileName: String) {
-        currentVMFileName = fileName.trimmingCharacters(in: .newlines)
+    func SetFileName(fileName: String) {
+        currentFileName = fileName.trimmingCharacters(in: .newlines)
     }
     
     /* Closes the output file */
@@ -355,7 +547,7 @@ class CodeWriter {
     
     private func writePushStatic(index: Int) {
         let hackCommand = """
-        @\(currentVMFileName).\(index)
+        @\(currentFileName).\(index)
         D=M
         @SP
         A=M
@@ -373,7 +565,7 @@ class CodeWriter {
         M=M-1
         A=M
         D=M
-        @\(currentVMFileName).\(index)
+        @\(currentFileName).\(index)
         M=D
         
         """

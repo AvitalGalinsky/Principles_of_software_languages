@@ -33,7 +33,7 @@ func main() {
             let parser = try Parser(inputFilePath: folderPath + fileName)
             //work on file
             let index = fileName.lastIndex(of: ".")!
-            codeWriter.SetVMFileName(fileName: String(fileName.prefix(upTo: index)) + "\n")
+            codeWriter.SetFileName(fileName: String(fileName.prefix(upTo: index)) + "\n")
             while(parser.hasMoreLines()) {
                 parser.advance()
                 switch (parser.commandType()) {
@@ -41,6 +41,18 @@ func main() {
                     codeWriter.WriteArithmetic(command: parser.arg1())
                 case cmdType.c_push, cmdType.c_pop:
                     codeWriter.WritePushPop(cType: parser.commandType(), segment: parser.arg1(), index: parser.arg2())
+                case cmdType.c_label:
+                    codeWriter.WriteLabel(label: parser.arg1())
+                case cmdType.c_goto:
+                    codeWriter.WriteGoto(label: parser.arg1())
+                case cmdType.c_if:
+                    codeWriter.WriteIf(label: parser.arg1())
+                case cmdType.c_call:
+                    codeWriter.WriteCall(functionName: parser.arg1(), nArgs: parser.arg2())
+                case cmdType.c_function:
+                    codeWriter.WriteFunction(functionName: parser.arg1(), nVars: parser.arg2())
+                case cmdType.c_return:
+                    codeWriter.WriteReturn()
                 default:
                     continue
                 }
