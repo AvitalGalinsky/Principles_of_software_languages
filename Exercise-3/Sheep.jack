@@ -1,0 +1,24 @@
+class Sheep {
+     
+    method void draw(int location) {
+        var int memAddress;
+        let memAddress = 16384 + location;
+        do Memory.poke(memAddress + 0, 0);
+        do Memory.poke(memAddress + 32, 4064);
+        do Memory.poke(memAddress + 64, 4112);
+        do Memory.poke(memAddress + 96, 8200);
+        do Memory.poke(memAddress + 128, 18372);
+        do Memory.poke(memAddress + 160, -25230);
+        do Memory.poke(memAddress + 192, -30782);
+        do Memory.poke(memAddress + 224, -30782);
+        do Memory.poke(memAddress + 256, -30782);
+        do Memory.poke(memAddress + 288, 17284);
+        do Memory.poke(memAddress + 320, 16388);
+        do Memory.poke(memAddress + 352, 12312);
+        do Memory.poke(memAddress + 384, 3424);
+        do Memory.poke(memAddress + 416, 1344);
+        do Memory.poke(memAddress + 448, 1344);
+        do Memory.poke(memAddress + 480, 1984);
+        return;
+    }
+}
