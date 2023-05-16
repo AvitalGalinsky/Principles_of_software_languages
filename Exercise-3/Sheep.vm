@@ -1,0 +1,732 @@
+function Sheep.new 0
+push constant 3
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push constant 0
+pop this 2
+push pointer 0
+call Sheep.draw 1
+pop temp 0
+push pointer 0
+return
+function Sheep.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Sheep.getLocation 1
+push argument 0
+pop pointer 0
+push constant 32
+push this 1
+call Math.multiply 2
+push this 0
+push constant 16
+call Math.divide 2
+add
+pop local 0
+push local 0
+return
+function Sheep.draw 0
+push argument 0
+pop pointer 0
+push this 2
+push constant 0
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Sheep.draw0 1
+pop temp 0
+label IF_FALSE0
+push this 2
+push constant 90
+eq
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+call Sheep.draw90 1
+pop temp 0
+label IF_FALSE1
+push this 2
+push constant 180
+eq
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+call Sheep.draw180 1
+pop temp 0
+label IF_FALSE2
+push this 2
+push constant 270
+eq
+if-goto IF_TRUE3
+goto IF_FALSE3
+label IF_TRUE3
+push pointer 0
+call Sheep.draw270 1
+pop temp 0
+label IF_FALSE3
+push constant 0
+return
+function Sheep.draw0 1
+push argument 0
+pop pointer 0
+push constant 16384
+push pointer 0
+call Sheep.getLocation 1
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 4064
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 4112
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 8200
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 18372
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 25230
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 30782
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 30782
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 30782
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 17284
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 16388
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 12312
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 3168
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 1344
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 1344
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 1984
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Sheep.draw90 1
+push argument 0
+pop pointer 0
+push constant 16384
+push pointer 0
+call Sheep.getLocation 1
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 1920
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 2144
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 4112
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 9232
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 17416
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 20367
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 19393
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 20423
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 19393
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 20367
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 17416
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 9232
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 4112
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 2144
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 1920
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Sheep.draw180 1
+push argument 0
+pop pointer 0
+push constant 16384
+push pointer 0
+call Sheep.getLocation 1
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 992
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 672
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 672
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 1584
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 6156
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 8194
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 8642
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 17377
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 17377
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 17377
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 20153
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 9186
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 4100
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 2056
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 2032
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Sheep.draw270 1
+push argument 0
+pop pointer 0
+push constant 16384
+push pointer 0
+call Sheep.getLocation 1
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 480
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 1552
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 2056
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 2084
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 4130
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 3598
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 31790
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 7182
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 31790
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 3598
+neg
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 4130
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 2084
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 2056
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 1552
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 480
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Sheep.erase 1
+push argument 0
+pop pointer 0
+push constant 16384
+push pointer 0
+call Sheep.getLocation 1
+add
+pop local 0
+push local 0
+push constant 0
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 32
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 64
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 96
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 128
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 160
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 192
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 224
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 256
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 288
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 320
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 352
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 384
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 416
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 448
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push local 0
+push constant 480
+add
+push constant 0
+call Memory.poke 2
+pop temp 0
+push constant 0
+return
+function Sheep.rotate 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Sheep.erase 1
+pop temp 0
+push this 2
+push constant 90
+add
+pop this 2
+push this 2
+push constant 360
+eq
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+pop this 2
+label IF_FALSE0
+push pointer 0
+call Sheep.draw 1
+pop temp 0
+push constant 0
+return
+function Sheep.moveUp 0
+push argument 0
+pop pointer 0
+push this 1
+push constant 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Sheep.erase 1
+pop temp 0
+push this 1
+push constant 2
+sub
+pop this 1
+push pointer 0
+call Sheep.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Sheep.moveDown 0
+push argument 0
+pop pointer 0
+push constant 240
+push this 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Sheep.erase 1
+pop temp 0
+push this 1
+push constant 2
+add
+pop this 1
+push pointer 0
+call Sheep.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Sheep.moveLeft 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Sheep.erase 1
+pop temp 0
+push this 0
+push constant 2
+sub
+pop this 0
+push pointer 0
+call Sheep.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Sheep.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 496
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Sheep.erase 1
+pop temp 0
+push this 0
+push constant 2
+add
+pop this 0
+push pointer 0
+call Sheep.draw 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return

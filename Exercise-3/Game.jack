@@ -1,3 +1,209 @@
+
 class Game {
-    
+
+    field Sheep sheep;
+    field Truck truck;
+
+    field int operation; // 0=none, 1=up, 2=down, 3=left, 4=right, 5=rotate
+    field int steps;
+
+    /** Constructs a new Game. */
+    constructor Game new() {
+        let sheep = Sheep.new(206, 128);
+        let truck = Truck.new(306, 128);
+        let operation = 0;
+        return this;
+    }
+
+    /** Deallocates the object's memory. */
+    method void dispose() {
+        do sheep.dispose();
+        do truck.dispose();
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    /** Starts the game. Handles inputs from the user that control */
+    method void run() {
+        var char key;
+        var boolean exit;
+        let exit = false;
+        
+        /** select shape: */
+        while (key = 0 & ~(key = 83) & ~(key = 84) & ~(key = 140)) {
+            let key = Keyboard.keyPressed();
+        }
+
+        if (key = 83) { // s: for sheep
+            do truck.erase();
+            do runSheep();
+        }
+
+        if(key = 84) { // t: for truck
+            do sheep.erase();
+            do runTruck();
+        }
+
+        if(key = 140) {
+            let exit = true;
+        }
+        return;
+	}
+
+    method void runSheep() {
+        var char key;
+        var boolean exit;
+        var String s;
+        var char lastKey;
+        let exit = false;
+        let steps = 0; 
+        let lastKey = 0;
+        
+        /** start game with sheep: */
+        while (~exit) {
+            // waits for a key to be pressed.
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+                do moveSheep();
+            }
+
+            if (key = 140) {
+                let exit = true;
+            }
+            if(~(key = lastKey)) {
+                let steps = steps + 1;
+                let lastKey = key;
+            }
+            if (key = 131) {// 1=up, 2=down, 3=left, 4=right, 5=rotate
+                let operation = 1;
+            }
+            if (key = 133) {
+                let operation = 2;
+            }
+            if (key = 130) {
+                let operation = 3;
+            }
+            if (key = 132) {
+                let operation = 4;
+            }
+            if (key = 82) { //press r
+                let operation = 5; 
+                do sheep.rotate();
+                do Sys.wait(30); // Delays the next movement.
+            }
+            if (key = 32) { //stop move - press space
+                let operation = 0;
+                let key = 0;
+                do Sys.wait(20); // Delays the next movement.
+            }
+
+            // waits for the key to be released.
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do moveSheep();
+            }
+        }
+        let s = "number of steps is:";
+        do Output.printString(s);
+        do Output.println();
+        do Output.printInt(steps);       
+        return;
+    }
+
+    /** Moves the truck by 2 pixels in the current direction. */
+    method void moveSheep() {
+        if (operation = 1) {
+            do sheep.moveUp();
+        }
+        if (operation = 2) {
+            do sheep.moveDown();
+        }
+        if (operation = 3) {
+            do sheep.moveLeft();
+        }
+        if (operation = 4) {
+            do sheep.moveRight();
+        }
+        do Sys.wait(5); // Delays the next movement.
+        return;
+    }
+
+    method void runTruck() {
+        var char key;
+        var boolean exit;
+        var String s;
+        var char lastKey;
+        let exit = false;
+        let steps = 0; 
+        let lastKey = 0;
+        
+        /** start game with truck: */
+        while (~exit) {
+            // waits for a key to be pressed.
+            while (key = 0) {
+                let key = Keyboard.keyPressed();
+                do moveTruck();
+            }
+
+            if (key = 140) {
+                let exit = true;
+            }
+            if(~(key = lastKey)) {
+                let steps = steps + 1;
+                let lastKey = key;
+            }
+            if (key = 131) {
+                let operation = 1;
+            }
+            if (key = 133) {
+                let operation = 2;
+            }
+            if (key = 130) {
+                let operation = 3;
+            }
+            if (key = 132) {
+                let operation = 4;
+            }
+            if (key = 82) { // press r
+                let operation = 5;
+                do truck.rotate();
+                do Sys.wait(30); // Delays the next movement.
+            }
+            if(key = 32) { //stop move - press space
+                let operation = 0;
+                let key = 0;
+                do Sys.wait(20); // Delays the next movement.
+            }
+
+            // waits for the key to be released.
+            while (~(key = 0)) {
+                let key = Keyboard.keyPressed();
+                do moveTruck();
+            }
+        }
+        let s = "number of steps is:";
+        do Output.printString(s);
+        do Output.println();
+        do Output.printInt(steps);       
+        return;
+    }
+
+    /** Moves the truck by 2 pixels in the current direction. */
+    method void moveTruck() {
+        if (operation = 1) {
+            do truck.moveUp();
+        }
+        if (operation = 2) {
+            do truck.moveDown();
+        }
+        if (operation = 3) {
+            do truck.moveLeft();
+        }
+        if (operation = 4) {
+            do truck.moveRight();
+        }
+        do Sys.wait(5); // Delays the next movement.
+        return;
+    }
+
 }
