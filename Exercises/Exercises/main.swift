@@ -6,7 +6,14 @@
 //
 
 import Foundation
+//read input:
+print("Please enter the path of your folder:")
+var folderPath = readLine()!
+if (folderPath.last != "/") {
+    folderPath = "\(folderPath)/"
+}
 
-Exercise4_main()
+Exercise5_main(folderPath: folderPath)
+//Exercise1_main(folderPath: folderPath)
 
 

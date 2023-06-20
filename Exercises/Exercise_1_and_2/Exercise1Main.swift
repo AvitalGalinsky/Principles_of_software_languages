@@ -6,13 +6,7 @@
 //
 import Foundation
 
-func Exercise1_main() {
-    //read input:
-    print("Please enter the path of your folder:")
-    var folderPath = readLine()!
-    if (folderPath.last != "/") {
-        folderPath += "/"
-    }
+func Exercise1_main(folderPath : String) {
     let extensionType = "vm"
     
     do {
@@ -29,6 +23,7 @@ func Exercise1_main() {
         let codeWriter = try CodeWriter(outputFilePath: writeFilePath)
         
         for fileName in raedFilesNames {
+            print(fileName)
             /* read files one by one: */
             let parser = try Parser(inputFilePath: folderPath + fileName)
             //work on file

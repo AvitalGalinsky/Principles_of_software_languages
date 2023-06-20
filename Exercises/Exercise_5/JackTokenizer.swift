@@ -15,21 +15,25 @@ enum tokType {
     case T_STRING_CONST
 }
 
+struct Token
+{
+    let type: String
+    let value: String
+}
+
 class JackTokenizer {
     
-    private var outputFileHandle: FileHandle?
-    private var tokensList: [String] = []
+    private var recognizedWordsList: [String] = []
+    private var tokensList: [Token] = []
+    private var methodsList: [String] = [] // list of all the class methods names
+    
     private var charIndex = 0 // for automat
     
     private var currentTokenIndex = 0
     private var currentToken = ""
-    private let root : XMLElement
-    private let xml : XMLDocument
     
     /* Opens the input .jack file and gets ready to tokenize it*/
-    init(jackFilePath: String, outputTokensFile : String) throws {
-        root = XMLElement(name: "tokens")
-        xml = XMLDocument(rootElement: root)
+    init(jackFilePath: String) throws {
         do{
             /* read the origin jack code */
             let jackCode = try String(contentsOfFile: jackFilePath)
@@ -37,21 +41,7 @@ class JackTokenizer {
         } catch {
             fatalError("Error reading file: \(error.localizedDescription)")
         }
-        
-        /* open file to write the tokens */
-        if FileManager.default.fileExists(atPath: outputTokensFile) {
-            do {
-                try FileManager.default.removeItem(atPath: outputTokensFile)
-            } catch {
-                fatalError("Error removing file: \(error.localizedDescription)")
-            }
-        }
-        /* create file for output: */
-        FileManager.default.createFile(atPath: outputTokensFile, contents: nil, attributes: nil)
-        outputFileHandle = FileHandle(forWritingAtPath: outputTokensFile)
-        if (outputFileHandle == nil) {
-            fatalError("Error open file: \(outputTokensFile) for writing")
-        }
+    
     }
     
     private func Q1(jackCodeContent : String) { //letters
@@ -62,7 +52,7 @@ class JackTokenizer {
             charIndex += 1
             char = jackCodeContent[jackCodeContent.index(jackCodeContent.startIndex, offsetBy: charIndex)]
         }
-        tokensList.append(token)
+        recognizedWordsList.append(token)
     }
     
     private func Q2(jackCodeContent : String) { //digits
@@ -73,7 +63,7 @@ class JackTokenizer {
             charIndex += 1
             char = jackCodeContent[jackCodeContent.index(jackCodeContent.startIndex, offsetBy: charIndex)]
         }
-        tokensList.append(token)
+        recognizedWordsList.append(token)
     }
     
     private func Q3(jackCodeContent : String) { //string
@@ -87,7 +77,7 @@ class JackTokenizer {
         }
         token.append(char)
         charIndex += 1
-        tokensList.append(token)
+        recognizedWordsList.append(token)
     }
     
     private func Q4(jackCodeContent : String) { //comments
@@ -114,7 +104,7 @@ class JackTokenizer {
             charIndex = charNextIndex + 1
         }
         else {
-            tokensList.append("/")
+            recognizedWordsList.append("/")
         }
         
     }
@@ -153,7 +143,7 @@ class JackTokenizer {
                 Q2(jackCodeContent : jackCodeContent) //digits
             }
             else if(isSymbol(token : String(char))){
-                tokensList.append(String(char))
+                recognizedWordsList.append(String(char))
                 charIndex += 1
             }
             else if(char == "\"") {
@@ -172,7 +162,7 @@ class JackTokenizer {
     
     /* Are there more tokens in the input? */
     func hasMoreTokens() -> Bool {
-        if currentTokenIndex < tokensList.count {
+        if currentTokenIndex < recognizedWordsList.count {
             return true
         }
         return false
@@ -182,7 +172,7 @@ class JackTokenizer {
      This method should be called only if hasMreTokens is true.
      Initially there is no current token.*/
     func advance() {
-        currentToken = tokensList[currentTokenIndex]
+        currentToken = recognizedWordsList[currentTokenIndex]
         currentTokenIndex += 1
     }
     
@@ -203,39 +193,48 @@ class JackTokenizer {
         return tokType.T_IDENTIFIER
     }
     
+    var isMethod = false //recognize if the keyword is method, if it is, append the next identifier to mthodsList
     /* Returns the keyword which is current token, as a constant.
      This method should be called only if tokenType is KEYWORD.*/
     func keyWord() {
-        root.addChild(XMLElement(name: "keyword", stringValue: currentToken))
+        tokensList.append(Token(type: "keyword", value: currentToken))
+        if currentToken == "method" {
+            isMethod = true
+        }
     }
     
     /* Returns the character which is the current token. should be called only if tokenType is SYMBOL.*/
     func symbol() {
-        root.addChild(XMLElement(name: "symbol", stringValue: currentToken))
+        tokensList.append(Token(type: "symbol", value: currentToken))
     }
     
     /* Returns the string which is the current token. should be called only if tokenType is IDENTIFIER. */
     func identifier() {
-        root.addChild(XMLElement(name: "identifier", stringValue: currentToken))
+        tokensList.append(Token(type: "identifier", value: currentToken))
+        if isMethod {
+            methodsList.append(currentToken)
+            isMethod = false
+        }
     }
     
     /* Returns the integer value of the current token. should be called only if tokenType is INT_CONST. */
     func intVal() {
-        root.addChild(XMLElement(name: "integerConstant", stringValue: currentToken))
+        tokensList.append(Token(type: "integerConstant", value: currentToken))
     }
     
     /* Returns the string value of the current token, without the opening and closing double quotes. should be called only if tokenType is STRING_CONST. */
     func stringVal() {
         currentToken.removeFirst()
         currentToken.removeLast()
-        root.addChild(XMLElement(name: "stringConstant", stringValue: currentToken))
+        tokensList.append(Token(type: "stringConstant", value: currentToken))
     }
     
-    func Close() {
-        outputFileHandle!.write(xml.xmlData(options: XMLNode.Options.nodePrettyPrint))
-        if(outputFileHandle != nil) {
-            (outputFileHandle!).closeFile()
-        }
+    func GetTokensList() -> [Token] {
+        return tokensList
+    }
+    
+    func GetMethodsList() -> [String] {
+        return methodsList
     }
     
 }

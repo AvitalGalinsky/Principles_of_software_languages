@@ -8,14 +8,20 @@
 
 /* Begin PBXBuildFile section */
 		1D7D761B2A1E570200D5B12E /* Exercise4Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7D761A2A1E570200D5B12E /* Exercise4Main.swift */; };
-		1D7D761D2A1E572D00D5B12E /* JackTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7D761C2A1E572D00D5B12E /* JackTokenizer.swift */; };
-		1D7D761F2A1E575200D5B12E /* CompilationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7D761E2A1E575200D5B12E /* CompilationEngine.swift */; };
-		1D7D76212A1E579100D5B12E /* JackAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7D76202A1E579100D5B12E /* JackAnalyzer.swift */; };
+		1D7D761D2A1E572D00D5B12E /* JackTokenizer_4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7D761C2A1E572D00D5B12E /* JackTokenizer_4.swift */; };
+		1D7D76212A1E579100D5B12E /* JackAnalyzer_4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D7D76202A1E579100D5B12E /* JackAnalyzer_4.swift */; };
 		1D84EFE92A1E517400742048 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84EFE82A1E517400742048 /* main.swift */; };
 		1D84EFF52A1E524600742048 /* CodeWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84EFF12A1E524600742048 /* CodeWriter.swift */; };
 		1D84EFF62A1E524600742048 /* FileException.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84EFF22A1E524600742048 /* FileException.swift */; };
 		1D84EFF72A1E524600742048 /* Exercise1Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84EFF32A1E524600742048 /* Exercise1Main.swift */; };
 		1D84EFF82A1E524600742048 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D84EFF42A1E524600742048 /* Parser.swift */; };
+		1D9238B32A3C575600D635CE /* Exercise5Main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9238B22A3C575600D635CE /* Exercise5Main.swift */; };
+		1D9238B52A3C577100D635CE /* JackTokenizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9238B42A3C577100D635CE /* JackTokenizer.swift */; };
+		1D9238B72A3C578800D635CE /* CompilationEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9238B62A3C578800D635CE /* CompilationEngine.swift */; };
+		1D9238B92A3C57A400D635CE /* JackAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9238B82A3C57A400D635CE /* JackAnalyzer.swift */; };
+		1D9238BB2A3C5B8C00D635CE /* CompilationEngine_4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9238BA2A3C5B8C00D635CE /* CompilationEngine_4.swift */; };
+		1D9238BD2A3C6B0A00D635CE /* SymbolTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9238BC2A3C6B0A00D635CE /* SymbolTable.swift */; };
+		1D9238BF2A3C776A00D635CE /* VMWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D9238BE2A3C776A00D635CE /* VMWriter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -32,15 +38,21 @@
 
 /* Begin PBXFileReference section */
 		1D7D761A2A1E570200D5B12E /* Exercise4Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise4Main.swift; sourceTree = "<group>"; };
-		1D7D761C2A1E572D00D5B12E /* JackTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackTokenizer.swift; sourceTree = "<group>"; };
-		1D7D761E2A1E575200D5B12E /* CompilationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationEngine.swift; sourceTree = "<group>"; };
-		1D7D76202A1E579100D5B12E /* JackAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackAnalyzer.swift; sourceTree = "<group>"; };
+		1D7D761C2A1E572D00D5B12E /* JackTokenizer_4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackTokenizer_4.swift; sourceTree = "<group>"; };
+		1D7D76202A1E579100D5B12E /* JackAnalyzer_4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackAnalyzer_4.swift; sourceTree = "<group>"; };
 		1D84EFE52A1E517400742048 /* Exercises */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Exercises; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D84EFE82A1E517400742048 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		1D84EFF12A1E524600742048 /* CodeWriter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CodeWriter.swift; sourceTree = "<group>"; };
 		1D84EFF22A1E524600742048 /* FileException.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileException.swift; sourceTree = "<group>"; };
 		1D84EFF32A1E524600742048 /* Exercise1Main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Exercise1Main.swift; sourceTree = "<group>"; };
 		1D84EFF42A1E524600742048 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
+		1D9238B22A3C575600D635CE /* Exercise5Main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Exercise5Main.swift; sourceTree = "<group>"; };
+		1D9238B42A3C577100D635CE /* JackTokenizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackTokenizer.swift; sourceTree = "<group>"; };
+		1D9238B62A3C578800D635CE /* CompilationEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationEngine.swift; sourceTree = "<group>"; };
+		1D9238B82A3C57A400D635CE /* JackAnalyzer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JackAnalyzer.swift; sourceTree = "<group>"; };
+		1D9238BA2A3C5B8C00D635CE /* CompilationEngine_4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilationEngine_4.swift; sourceTree = "<group>"; };
+		1D9238BC2A3C6B0A00D635CE /* SymbolTable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SymbolTable.swift; sourceTree = "<group>"; };
+		1D9238BE2A3C776A00D635CE /* VMWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VMWriter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,6 +69,7 @@
 		1D84EFDC2A1E517400742048 = {
 			isa = PBXGroup;
 			children = (
+				1D9238B12A3C571C00D635CE /* Exercise_5 */,
 				1D84EFEF2A1E51B000742048 /* Exercise_1_and_2 */,
 				1D84EFF02A1E51C500742048 /* Exercise_4 */,
 				1D84EFE72A1E517400742048 /* Exercises */,
@@ -95,11 +108,24 @@
 			isa = PBXGroup;
 			children = (
 				1D7D761A2A1E570200D5B12E /* Exercise4Main.swift */,
-				1D7D761C2A1E572D00D5B12E /* JackTokenizer.swift */,
-				1D7D761E2A1E575200D5B12E /* CompilationEngine.swift */,
-				1D7D76202A1E579100D5B12E /* JackAnalyzer.swift */,
+				1D7D761C2A1E572D00D5B12E /* JackTokenizer_4.swift */,
+				1D7D76202A1E579100D5B12E /* JackAnalyzer_4.swift */,
+				1D9238BA2A3C5B8C00D635CE /* CompilationEngine_4.swift */,
 			);
 			path = Exercise_4;
+			sourceTree = "<group>";
+		};
+		1D9238B12A3C571C00D635CE /* Exercise_5 */ = {
+			isa = PBXGroup;
+			children = (
+				1D9238B22A3C575600D635CE /* Exercise5Main.swift */,
+				1D9238B42A3C577100D635CE /* JackTokenizer.swift */,
+				1D9238B62A3C578800D635CE /* CompilationEngine.swift */,
+				1D9238B82A3C57A400D635CE /* JackAnalyzer.swift */,
+				1D9238BC2A3C6B0A00D635CE /* SymbolTable.swift */,
+				1D9238BE2A3C776A00D635CE /* VMWriter.swift */,
+			);
+			path = Exercise_5;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -162,13 +188,19 @@
 			files = (
 				1D84EFF62A1E524600742048 /* FileException.swift in Sources */,
 				1D7D761B2A1E570200D5B12E /* Exercise4Main.swift in Sources */,
-				1D7D76212A1E579100D5B12E /* JackAnalyzer.swift in Sources */,
+				1D9238BD2A3C6B0A00D635CE /* SymbolTable.swift in Sources */,
+				1D9238BB2A3C5B8C00D635CE /* CompilationEngine_4.swift in Sources */,
+				1D9238BF2A3C776A00D635CE /* VMWriter.swift in Sources */,
+				1D7D76212A1E579100D5B12E /* JackAnalyzer_4.swift in Sources */,
 				1D84EFE92A1E517400742048 /* main.swift in Sources */,
-				1D7D761D2A1E572D00D5B12E /* JackTokenizer.swift in Sources */,
+				1D9238B92A3C57A400D635CE /* JackAnalyzer.swift in Sources */,
+				1D9238B32A3C575600D635CE /* Exercise5Main.swift in Sources */,
+				1D7D761D2A1E572D00D5B12E /* JackTokenizer_4.swift in Sources */,
 				1D84EFF82A1E524600742048 /* Parser.swift in Sources */,
+				1D9238B72A3C578800D635CE /* CompilationEngine.swift in Sources */,
 				1D84EFF72A1E524600742048 /* Exercise1Main.swift in Sources */,
 				1D84EFF52A1E524600742048 /* CodeWriter.swift in Sources */,
-				1D7D761F2A1E575200D5B12E /* CompilationEngine.swift in Sources */,
+				1D9238B52A3C577100D635CE /* JackTokenizer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

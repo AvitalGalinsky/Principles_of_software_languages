@@ -16,36 +16,34 @@
  */
 import Foundation
 
-class JackAnalyzer {
+class JackAnalyzer_4 {
     
     init() {
         
     }
     
     func createTokenFile(jackFile : String, outputTokensFile : String) throws {
-        let tokenizer =  try JackTokenizer(jackFilePath: jackFile, outputTokensFile: outputTokensFile)
+        let tokenizer =  try JackTokenizer_4(jackFilePath: jackFile, outputTokensFile: outputTokensFile)
         while tokenizer.hasMoreTokens() {
             tokenizer.advance()
             switch (tokenizer.tokenType()) {
-            case tokType.T_INT_CONST:
+            case tokType_4.T_INT_CONST:
                 tokenizer.intVal()
-            case tokType.T_IDENTIFIER:
+            case tokType_4.T_IDENTIFIER:
                 tokenizer.identifier()
-            case tokType.T_STRING_CONST:
+            case tokType_4.T_STRING_CONST:
                 tokenizer.stringVal()
-            case tokType.T_KEYWORD:
+            case tokType_4.T_KEYWORD:
                 tokenizer.keyWord()
-            case tokType.T_SYMBOL:
+            case tokType_4.T_SYMBOL:
                 tokenizer.symbol()
-            default:
-                continue
             }
         }
         tokenizer.Close()
     }
     
     func createTreeFile(tokensFile : String, outputTreeFile : String) {
-        let compilationEngine =  try CompilqtionEngine(tokenFilePath: tokensFile, outputFilePath: outputTreeFile)
+        let compilationEngine =  CompilqtionEngine_4(tokenFilePath: tokensFile, outputFilePath: outputTreeFile)
         compilationEngine.compileClass()
     }
     

@@ -7,20 +7,20 @@
 
 import Foundation
 
-struct Token
+struct Token_4
 {
     let type: String
     let value: String
 }
 
-class CompilqtionEngine {
+class CompilqtionEngine_4 {
         
     private var outputFileHandle: FileHandle?
-    private var tokensList: [Token] = []
+    private var tokensList: [Token_4] = []
 //    private var treeRoot : XMLElement
 //    private var treeDoc : XMLDocument
     private var currentTokenIndex = 0
-    private var currentToken : Token
+    private var currentToken : Token_4
     
     
     /* Creates a new compilation engine with the given input and output.
@@ -39,7 +39,7 @@ class CompilqtionEngine {
         let tokensRoot = tokensDoc.rootElement()!
         for child in tokensRoot.children ?? [] {
             if let childName = child.name, let childValue = child.stringValue?.trimmingCharacters(in: .whitespacesAndNewlines) {
-                tokensList.append(Token(type: childName, value: childValue))
+                tokensList.append(Token_4(type: childName, value: childValue))
             }
         }
         
@@ -57,7 +57,7 @@ class CompilqtionEngine {
         if (outputFileHandle == nil) {
             fatalError("Error open file: \(outputFilePath) for writing")
         }
-        currentToken = Token(type: "", value: "")
+        currentToken = Token_4(type: "", value: "")
     }
     
     /* Are there more tokens in the input? */
@@ -73,26 +73,26 @@ class CompilqtionEngine {
         currentTokenIndex += 1
     }
     
-    func checkNextToken() ->Token {
+    func checkNextToken() ->Token_4 {
         let token = tokensList[tokensList.index(tokensList.startIndex, offsetBy: currentTokenIndex)]
         return token
     }
     
-    private func isOp(token : Token) -> Bool {
+    private func isOp(token : Token_4) -> Bool {
         if (token.type == "symbol" && (token.value == "+" || token.value == "-" || token.value == "*" || token.value == "/" || token.value == "&" || token.value == "|" || token.value == "<" || token.value == ">" || token.value == "=")) {
             return true
         }
         return false
     }
     
-    private func isUnaryOp(token : Token) -> Bool {
+    private func isUnaryOp(token : Token_4) -> Bool {
         if (token.type == "symbol" && (token.value == "-" || token.value == "~")) {
             return true
         }
         return false
     }
     
-    private func isKeywordConstant(token : Token) -> Bool {
+    private func isKeywordConstant(token : Token_4) -> Bool {
         if (token.type == "keyword" && (token.value == "true" || token.value == "false" || token.value == "null" || token.value == "this")) {
             return true
         }

@@ -299,6 +299,11 @@ class CodeWriter {
     
     func SetFileName(fileName: String) {
         currentFileName = fileName.trimmingCharacters(in: .newlines)
+        let name = """
+        // compile file name: \(fileName)
+        
+        """
+        outputFileHandle!.write(name.data(using: .utf8)!)
     }
     
     /* Closes the output file */
